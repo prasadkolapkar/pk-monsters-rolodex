@@ -1,0 +1,24 @@
+import React, { Component } from "react";
+
+class SearchBox extends Component {
+  constructor() {
+    super();
+  }
+
+  render() {
+    const { onChangeHandler, placeholder } = this.props;
+
+    return (
+      <React.Fragment>
+        <input
+          type="search"
+          className="search-box"
+          placeholder={placeholder}
+          onChange={onChangeHandler}
+        />
+      </React.Fragment>
+    );
+  }
+}
+
+export default SearchBox;
