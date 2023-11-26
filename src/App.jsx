@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { Component } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+class App extends Component {
+  constructor() {
+    super();
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    this.state = {
+      monsters: [],
+      searchField: "",
+    };
+    console.log("constructor");
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount");
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ monsters: data }, () => {
+          console.log(this.state);
+        });
+      });
+  }
+
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLowerCase();
+    this.setState(() => {
+      return { searchField };
+    });
+  };
+
+  render() {
+    console.log("render");
+
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+
+    const filterMonsters = monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(searchField);
+    });
+
+    return (
+      <React.Fragment>
+        <input
+          type="search"
+          className="search-box"
+          placeholder="Search monsters"
+          onChange={onSearchChange}
+        />
+        {filterMonsters.map((monster) => {
+          return (
+            <div key={monster.id}>
+              <h1>{monster.name}</h1>
+            </div>
+          );
+        })}
+      </React.Fragment>
+    );
+  }
 }
 
-export default App
+export default App;
