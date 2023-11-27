@@ -23,8 +23,7 @@ import "./search-box.styles.css";
 // }
 // export default SearchBox;
 
-const SearchBox = (props) => {
-  const { onChangeHandler, placeholder } = props;
+const SearchBox = ({ onChangeHandler, placeholder }) => {
   return (
     <React.Fragment>
       <input
