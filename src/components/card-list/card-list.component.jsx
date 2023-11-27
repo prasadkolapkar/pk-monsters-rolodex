@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./card-list.styles.css";
 class CardList extends Component {
   constructor() {
     super();
@@ -10,13 +10,23 @@ class CardList extends Component {
 
     return (
       <React.Fragment>
-        {monsters.map((monster) => {
-          return (
-            <div key={monster.id}>
-              <h1>{monster.name}</h1>
-            </div>
-          );
-        })}
+        <div className="card-list">
+          {monsters.map((monster) => {
+            const { id, name, email } = monster;
+            return (
+              <div className="card-container" key={id}>
+                <img
+                  alt={`monster ${name}`}
+                  src={`https://robohash.org/${id}`}
+                  height="180px"
+                  width="180px"
+                />
+                <h2>{name}</h2>
+                <p>{email}</p>
+              </div>
+            );
+          })}
+        </div>
       </React.Fragment>
     );
   }
