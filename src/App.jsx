@@ -47,27 +47,30 @@ import SearchBox from "./components/search-box/search-box.component";
 // );
 //   }
 // }
-
 // export default App;
 
 const App = () => {
   const [monsters, setMonsters] = useState([]);
   const [searchField, setSearchField] = useState("");
+  const [filterMonsters, setFilterMonsters] = useState(monsters);
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
     setSearchField(searchFieldString);
   };
 
-  const filterMonsters = monsters.filter((monster) => {
-    return monster.name.toLowerCase().includes(searchField);
-  });
-
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
       .then((data) => setMonsters(data));
   }, []);
+
+  useEffect(() => {
+    const newFilterMonsters = monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(searchField);
+    });
+    setFilterMonsters(newFilterMonsters);
+  }, [monsters, searchField]);
 
   return (
     <React.Fragment>
