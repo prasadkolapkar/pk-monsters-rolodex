@@ -39,6 +39,7 @@ class App extends Component {
 
     return (
       <React.Fragment>
+        <h1 className="app-title">Monster Rolodex</h1>
         <SearchBox onChangeHandler={onSearchChange} placeholder="Search..." />
         <CardList monsters={filterMonsters} />
       </React.Fragment>
